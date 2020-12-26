@@ -1,0 +1,16 @@
+{
+    "clientes": [
+        {
+            "nome": "Nathan",
+            "telefone": "(17) 99140-7968",
+            "valor_divida": "185,60",
+            "id": "1"
+        },
+        {
+            "nome": "Renan",
+            "telefone": "(17) 1234-5678",
+            "valor_divida": "385,60",
+            "id": "2"
+        }
+    ]
+}
