@@ -3,5 +3,5 @@ import './Footer.css'
 
 export default props => 
     <footer className="footer">
-        Footer
+        <span> Desenvolvido por <strong>Nathan</strong></span>
     </footer>

@@ -1,7 +1,11 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import './Main.css'
+import Header from './Header'
 
 export default props => 
-    <main className="content">
-        Content
-    </main>
+    <Fragment>
+        <Header icon="users" titulo="Clientes" subtitulo="Lista de clientes"/>
+        <main className="content">
+            Content
+        </main>
+    </Fragment>

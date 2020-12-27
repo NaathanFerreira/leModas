@@ -1,3 +1,7 @@
 .footer {
-    background-color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0px 15px;
+    box-shadow: var(--shadow);
 }
