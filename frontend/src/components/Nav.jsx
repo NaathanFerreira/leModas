@@ -8,8 +8,5 @@ export default props =>
             <Link to="/clientes">
                 <i className="fa fa-users"></i> Clientes
             </Link>
-            <Link to="/register">
-                <i className="fa fa-plus-circle"></i> Registrar Cliente
-            </Link>
         </nav>
     </aside>

@@ -4,8 +4,10 @@ import Header from './Header'
 
 export default props => 
     <Fragment>
-        <Header icon="users" titulo="Clientes" subtitulo="Lista de clientes"/>
-        <main className="content">
-            Content
+        <Header {...props}/>
+        <main className="content container-fluid">
+            <div className="p-3 mt-3">
+                {props.children}
+            </div>
         </main>
     </Fragment>
