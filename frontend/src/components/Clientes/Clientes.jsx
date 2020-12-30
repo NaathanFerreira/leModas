@@ -1,6 +1,9 @@
-import React, {Component} from 'react'
+import React, {Component, useState} from 'react'
 import Main from '../Main'
 import axios from 'axios'
+import Button from '../Button'
+import Formulario from './Formulario'
+import $ from 'jquery'
 
 const headerProps = {
     icon: "users",
@@ -11,23 +14,36 @@ const headerProps = {
 const baseUrl = 'http://localhost:3001/clientes'
 
 const initialState = {
-    cliente: { nome:'', email:'', valor_divida:''},
+    cliente: { nome:'', telefone:'', valor_divida:''},
     list: []
 }
 
+let visibilidade = false
+
 export default class Clientes extends Component {
+
 
     state = {...initialState}
 
-    componentWillMount(){
+    componentDidMount(){
         axios(baseUrl).then(response => {
             this.setState({ list: response.data })
         })
     }
 
+
+    // exibirOcultarForm(){
+    //     if (visibilidade) {
+    //         document.getElementById("formulario").style.display = "none";
+    //         visibilidade = false;
+    //     } else {
+    //         document.getElementById("formulario").style.display = "block";
+    //         visibilidade = true;
+    //     }
+    // }
+
     renderTable(){
-        console.log(this.state.list)
-        return (          
+        return (         
             <table className="table mt-4">
                 <thead>
                     <tr>
@@ -53,12 +69,12 @@ export default class Clientes extends Component {
                     <td>{clientes.telefone}</td>
                     <td>{clientes.valor_divida}</td>
                     <td>
-                        <button className="btn btn-warning">
+                        <Button color="warning">
                             <i className="fa fa-pencil"></i>
-                        </button>
-                        <button className="btn btn-danger ml-2">
+                        </Button>
+                        <Button color="danger" bootstrap="ml-2">
                             <i className="fa fa-trash"></i>
-                        </button>
+                        </Button>
                     </td>
                 </tr>
             )
@@ -67,6 +83,10 @@ export default class Clientes extends Component {
 
     render() {
         return <Main {...headerProps}>
+            <Formulario 
+            valueNome={this.state.nome}
+            valueTelefone={this.state.telefone}
+            valueDivida={this.state.valor_divida}/>
             {this.renderTable()}
         </Main>
     }
