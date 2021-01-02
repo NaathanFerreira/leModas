@@ -7,7 +7,7 @@ export default props => {
 
         let icon = open ? "fa-arrow-up" : "fa-arrow-down"
         return (
-            <div>
+            <div id={props.id}>
                 <div>
                     <button className="btn btn-info mb-3"
                     onClick={() => setOpen(!open)}
@@ -41,7 +41,7 @@ export default props => {
                             <div className="col-12 col-md-6 col-lg-4">
                                 <div className="form-group">
                                     <label><strong>Dívida</strong></label>
-                                    <input type="text" className="form-control"
+                                    <input type="number" className="form-control"
                                     onChange={e => props.updateField(e)} name="valor_divida"
                                     value={props.valueDivida} placeholder="Digite o valor da dívida..."/>
                                 </div>

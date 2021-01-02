@@ -73,7 +73,18 @@ export default class Clientes extends Component {
         })
     }
 
-    // LISTA DE CLIENTES
+    // LISTA E FUNÇÕES DE CLIENTES
+    pagarDivida(qtd, cliente){
+        let method = 'put'
+        cliente.valor_divida -= qtd
+        const url = `${baseUrl}/${cliente.id}`
+        axios[method](url, cliente).then( response => {
+            const list = this.getUpdatedList(response.data)
+            this.setState({ list })
+        })
+    }
+
+
     renderTable(){
         return (         
             <table className="table mt-4">
@@ -99,14 +110,25 @@ export default class Clientes extends Component {
                     <td>{cliente.id}</td>
                     <td>{cliente.nome}</td>
                     <td>{cliente.telefone}</td>
-                    <td>{cliente.valor_divida}</td>
+                    <td>R$ {parseFloat(cliente.valor_divida).toFixed(2)}</td>
                     <td>
-                        <Button color="warning" callback = {() => this.load(cliente)}>
-                            <i className="fa fa-pencil"></i>
+                        <a href="#form">
+                            <Button color="warning" callback = {() => this.load(cliente)}>
+                                <i className="fa fa-pencil"></i>
+                            </Button>
+                        </a>
+                        <Button color="primary" bootstrap="ml-2" callback = {() => {
+                            let qtd = prompt(`Deseja abater qual valor na dívida de ${cliente.nome.toUpperCase()}`)
+                            let qtdNum = parseFloat(qtd)
+                            if(isNaN(qtdNum)){
+                                alert("Você deve digitar um valor numérico !")
+                            } else {
+                                this.pagarDivida(qtd, cliente)
+                            }
+                        }}>
+                                Pagar
                         </Button>
-                        <Button color="primary" bootstrap="ml-2">
-                            Pagar
-                        </Button>
+
                         <Button color="danger" bootstrap="ml-2" callback = {() => this.remove(cliente)}>
                             <i className="fa fa-trash"></i>
                         </Button>
@@ -120,6 +142,7 @@ export default class Clientes extends Component {
     render() {
         return <Main {...headerProps}>
             <Formulario 
+            id="form"
             updateField = {e => this.updateField(e)}
             clear  = {() => this.clear()}
             save = {() => this.save()}
