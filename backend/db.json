@@ -1,3 +1,10 @@
 {
-  "clientes": []
+  "clientes": [
+    {
+      "nome": "Nathan",
+      "telefone": "(17) 99140-7968",
+      "valor_divida": 1500,
+      "id": 1
+    }
+  ]
 }

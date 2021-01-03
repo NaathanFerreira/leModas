@@ -3,7 +3,10 @@ import Main from '../Main'
 import axios from 'axios'
 import Button from '../Button'
 import Formulario from './Formulario'
-import Collapse from 'react-bootstrap/Collapse'
+
+import { mask, unMask} from 'remask'
+
+const patternDivida = ['999.999.999']
 
 const headerProps = {
     icon: "users",
@@ -34,6 +37,7 @@ export default class Clientes extends Component {
     save(){
         const cliente = this.state.cliente
         if(cliente.nome && cliente.telefone && cliente.valor_divida) {
+            cliente.valor_divida = parseFloat(cliente.valor_divida)
             const method = cliente.id ? 'put' : 'post'
             const url = cliente.id ? `${baseUrl}/${cliente.id}` : baseUrl
 
@@ -74,11 +78,11 @@ export default class Clientes extends Component {
     }
 
     // LISTA E FUNÇÕES DE CLIENTES
-    pagarDivida(qtd, cliente){
-        let method = 'put'
-        cliente.valor_divida -= qtd
+    pagarDividaOuCobrar(qtd, cliente, cobrar = false){
+
+        cobrar ? cliente.valor_divida += qtd : cliente.valor_divida -= qtd
         const url = `${baseUrl}/${cliente.id}`
-        axios[method](url, cliente).then( response => {
+        axios.put(url, cliente).then( response => {
             const list = this.getUpdatedList(response.data)
             this.setState({ list })
         })
@@ -110,23 +114,36 @@ export default class Clientes extends Component {
                     <td>{cliente.id}</td>
                     <td>{cliente.nome}</td>
                     <td>{cliente.telefone}</td>
-                    <td>R$ {parseFloat(cliente.valor_divida).toFixed(2)}</td>
+                    <td>{parseFloat(cliente.valor_divida).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                     <td>
                         <a href="#form">
                             <Button color="warning" callback = {() => this.load(cliente)}>
                                 <i className="fa fa-pencil"></i>
                             </Button>
                         </a>
-                        <Button color="primary" bootstrap="ml-2" callback = {() => {
+
+                        <Button color="dark" bootstrap="ml-2" callback = {() => {
                             let qtd = prompt(`Deseja abater qual valor na dívida de ${cliente.nome.toUpperCase()}`)
                             let qtdNum = parseFloat(qtd)
                             if(isNaN(qtdNum)){
                                 alert("Você deve digitar um valor numérico !")
                             } else {
-                                this.pagarDivida(qtd, cliente)
+                                this.pagarDividaOuCobrar(qtdNum, cliente)
                             }
                         }}>
                                 Pagar
+                        </Button>
+
+                        <Button color="primary" bootstrap="ml-2" callback = {() => {
+                            let qtd = prompt(`Deseja cobrar qual valor de ${cliente.nome.toUpperCase()}`)
+                            let qtdNum = parseFloat(qtd)
+                            if(isNaN(qtdNum)){
+                                alert("Você deve digitar um valor numérico !")
+                            } else {
+                                this.pagarDividaOuCobrar(qtdNum, cliente, true)
+                            }
+                        }}>
+                                Cobrar
                         </Button>
 
                         <Button color="danger" bootstrap="ml-2" callback = {() => this.remove(cliente)}>
