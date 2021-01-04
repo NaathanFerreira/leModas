@@ -6,6 +6,7 @@ import { mask} from 'remask'
 
 
 const patternTelefone = ['(99) 99999-9999']
+const patternCPF = ['999.999.999-99']
 
 export default props => {
         const [open, setOpen] = useState(false)
@@ -25,8 +26,8 @@ export default props => {
                 <Collapse in={open}>
                     <div className="form" id="collapse-form">
                         <div className="row">
-                            <div className="col-12 col-md-6 col-lg-4">
-                                <div className="form-group nome">
+                            <div className="col-12 col-md-4 col-lg-6">
+                                <div className="form-group">
                                     <label><strong>Nome</strong></label>
                                     <input type="text" className="form-control" 
                                     onChange={e => props.updateField(e)} name="nome"
@@ -34,20 +35,46 @@ export default props => {
                                 </div>
                             </div>
 
-                            <div className="col-12 col-md-6 col-lg-4">
-                                <div className="form-group telefone">
+                            <div className="col-12 col-md-4 col-lg-6">
+                                <div className="form-group">
                                     <label><strong>Telefone</strong></label>
                                     <input type="text" className="form-control"
                                     onChange={e => props.updateField(e)} name="telefone"
-                                    value={mask(`${props.valueTelefone}`, patternTelefone)} placeholder="Digite o telefone..."/>
+                                    value={mask(`${props.valueTelefone}`, patternTelefone)} placeholder="Digíte o número de telefone"/>
                                 </div>
                             </div>
-                            <div className="col-12 col-md-6 col-lg-4">
-                                <div className="form-group divida">
+
+                            <div className="col-12 col-md-4 col-lg-6">
+                                <div className="form-group">
                                     <label><strong>Dívida</strong></label>
+                                    <div className="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">R$</span>
+                                        </div>
                                     <input type="number" className="form-control"
                                     onChange={e => props.updateField(e)} name="valor_divida" id="divida"
                                     value={props.valueDivida} placeholder="Digite o valor da dívida..."/>
+                                    </div>
+                            </div>
+                            </div>
+
+                            <div className="col-12 col-md-4 col-lg-6">
+                                <div className="form-group">
+                                    <label><strong>CPF</strong></label>
+                                    <input type="text" className="form-control"
+                                    onChange={e => props.updateField(e)}
+                                    value={mask(`${props.cpf}`, patternCPF)}
+                                    name="cpf" placeholder="Digíte o CPF"/>
+                                </div>
+                            </div>
+
+                            <div className="col-12">
+                                <div className="form-group">
+                                    <label><strong>Endereço</strong></label>
+                                    <input type="text" className="form-control"
+                                    onChange={e => props.updateField(e)}
+                                    value={props.endereco}
+                                    name="endereco" placeholder="Digíte o endereço"/>
                                 </div>
                             </div>
 

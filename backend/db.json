@@ -3,8 +3,18 @@
     {
       "nome": "Nathan",
       "telefone": "(17) 99140-7968",
-      "valor_divida": 1500,
+      "valor_divida": 250,
+      "cpf": "489.692.968-32",
+      "endereco": "Rua Casmin Alves de Moura, 115, Maria Zorita",
       "id": 1
+    },
+    {
+      "nome": "Elenice",
+      "telefone": "(17) 99195-0448",
+      "valor_divida": 1800,
+      "cpf": "489.692.968-32",
+      "endereco": "Rua VTNC",
+      "id": 2
     }
   ]
 }

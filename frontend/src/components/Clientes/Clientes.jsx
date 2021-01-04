@@ -3,10 +3,10 @@ import Main from '../Main'
 import axios from 'axios'
 import Button from '../Button'
 import Formulario from './Formulario'
+import './Cliente.css'
 
 import { mask, unMask} from 'remask'
 
-const patternDivida = ['999.999.999']
 
 const headerProps = {
     icon: "users",
@@ -17,7 +17,7 @@ const headerProps = {
 const baseUrl = 'http://localhost:3001/clientes'
 
 const initialState = {
-    cliente: { nome:'', telefone:'', valor_divida:''},
+    cliente: { nome:'', telefone: '', valor_divida: '', cpf: '', endereco: ''},
     list: []
 }
 
@@ -36,7 +36,7 @@ export default class Clientes extends Component {
     // FUNÇÕES DO FORMULÁRIO
     save(){
         const cliente = this.state.cliente
-        if(cliente.nome && cliente.telefone && cliente.valor_divida) {
+        if(cliente.nome && cliente.telefone && cliente.valor_divida && cliente.cpf && cliente.endereco) {
             cliente.valor_divida = parseFloat(cliente.valor_divida)
             const method = cliente.id ? 'put' : 'post'
             const url = cliente.id ? `${baseUrl}/${cliente.id}` : baseUrl
@@ -91,13 +91,14 @@ export default class Clientes extends Component {
 
     renderTable(){
         return (         
-            <table className="table mt-4">
-                <thead>
+            <table className="table table-striped table-bordered mt-4">
+                <thead className="thead-dark">
                     <tr>
-                        <th> Id </th>
+                        {/* <th> Id </th> */}
                         <th> Nome </th>
                         <th> Telefone </th>
                         <th> Dívida </th>
+                        <th> Ações </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,11 +112,15 @@ export default class Clientes extends Component {
         return this.state.list.map(cliente => {
             return (
                 <tr key={cliente.id}>
-                    <td>{cliente.id}</td>
-                    <td>{cliente.nome}</td>
+                    <td>
+                        <button id="btnName">
+                            {cliente.nome}
+                        </button>
+                    </td>
                     <td>{cliente.telefone}</td>
                     <td>{parseFloat(cliente.valor_divida).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                     <td>
+
                         <a href="#form">
                             <Button color="warning" callback = {() => this.load(cliente)}>
                                 <i className="fa fa-pencil"></i>
@@ -165,7 +170,10 @@ export default class Clientes extends Component {
             save = {() => this.save()}
             valueNome = {this.state.cliente.nome}  
             valueTelefone = {this.state.cliente.telefone} 
-            valueDivida = {this.state.cliente.valor_divida}/>
+            valueDivida = {this.state.cliente.valor_divida}
+            endereco = {this.state.cliente.endereco}
+            cpf = {this.state.cliente.cpf}/>
+            
             {this.renderTable()}
         </Main>
     }

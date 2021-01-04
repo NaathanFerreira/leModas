@@ -1,0 +1,9 @@
+#btnName {
+    border: none;
+    background-color: transparent;
+}
+
+#btnName:hover {
+    color: blue;
+    text-decoration: underline;
+}
