@@ -10,7 +10,12 @@ const patternCPF = ['999.999.999-99']
 
 export default props => {
         const [open, setOpen] = useState(false)
-
+        switch(window.location.href){
+            case "http://localhost:3000/clientes#form":
+                setOpen(true)
+                window.history.pushState("object or string", "Title", "/clientes");
+                break;
+        }
         let icon = open ? "fa-arrow-up" : "fa-arrow-down"
         return (
             <div id={props.id}>

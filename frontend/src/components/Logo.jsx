@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 
 export default props => 
     <aside className="logo">
-        <Link to="/clientes">
+        <Link to="/home">
             <img src={Logo} alt=""/>
         </Link>
     </aside>

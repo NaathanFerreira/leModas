@@ -3,7 +3,7 @@ import Main from '../Main'
 import axios from 'axios'
 import Button from '../Button'
 import Formulario from './Formulario'
-import './Cliente.css'
+import BtnName from './BtnName'
 
 import { mask, unMask} from 'remask'
 
@@ -71,10 +71,15 @@ export default class Clientes extends Component {
     }
 
     remove(cliente){
-        axios.delete(`${baseUrl}/${cliente.id}`).then(resp => {
-            const list = this.getUpdatedList(cliente, false)
-            this.setState({ list })
-        })
+        let rmv = window.confirm(`Deseja remover ${cliente.nome.toUpperCase()}?`)
+        if(rmv){
+            axios.delete(`${baseUrl}/${cliente.id}`).then(resp => {
+                const list = this.getUpdatedList(cliente, false)
+                this.setState({ list })
+            })
+        } else {
+            return
+        }
     }
 
     // LISTA E FUNÇÕES DE CLIENTES
@@ -113,9 +118,13 @@ export default class Clientes extends Component {
             return (
                 <tr key={cliente.id}>
                     <td>
-                        <button id="btnName">
-                            {cliente.nome}
-                        </button>
+                        <BtnName 
+                            nome={cliente.nome}
+                            telefone={cliente.telefone}
+                            divida={cliente.valor_divida}
+                            cpf={cliente.cpf}
+                            endereco={cliente.endereco}
+                        />
                     </td>
                     <td>{cliente.telefone}</td>
                     <td>{parseFloat(cliente.valor_divida).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
